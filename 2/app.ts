@@ -1,3 +1,6 @@
+// solutions:
+// https://www.reddit.com/r/adventofcode/comments/zac2v2/2022_day_2_solutions/
+
 import fs from 'fs'
 
 const you = {
@@ -44,18 +47,11 @@ function getResultPoints(opponent: string, you: string): number {
   }
 }
 
-function getSelectionPoints(type: string): number {
-  switch (type) {
-    case 'X':
-      return 1
-    case 'Y':
-      return 2
-    case 'Z':
-      return 3
-    default:
-      return 0
-  }
-}
+let selectionPoints = new Map<string, number>([
+  ['X', 1],
+  ['Y', 2],
+  ['Z', 3]
+])
 
 function getYourMove(type: 'win' | 'draw' | 'lose', sOpp: string): string {
   if (type == 'win') {
@@ -104,6 +100,6 @@ fs.readFileSync(`${__dirname}/input.txt`, 'utf-8')
     // part two end
 
     sum += getResultPoints(oppMove, yourMove)
-    sum += getSelectionPoints(yourMove)
+    sum += selectionPoints.get(yourMove) || 0
   })
 console.log(sum)
