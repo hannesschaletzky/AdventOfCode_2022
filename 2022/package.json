@@ -1,7 +1,7 @@
 {
-  "name": "adventofcode_2022",
+  "name": "advent_of_code_2022",
   "version": "1.0.0",
-  "description": "https://adventofcode.com/2022/about",
+  "description": "https://adventofcode.com/2022",
   "author": "Hannes Schaletzky",
   "license": "UNLICENSED",
   "dependencies": {
