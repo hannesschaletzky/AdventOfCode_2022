@@ -10,6 +10,6 @@ export const getInputLines = (): string[] => {
     pathFragments.push('input.txt')
   }
   const path = pathFragments.join('/')
-  console.log(path)
+  console.log(`using file: ${path}`)
   return fs.readFileSync(path, 'utf-8').split(/\r?\n/)
 }
