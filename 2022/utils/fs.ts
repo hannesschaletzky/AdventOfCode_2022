@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-export const getLinesOfFile = (): string[] => {
+export const getInputLines = (): string[] => {
   // determine which input file to use based on process.argv[2]
   let pathFragments = process.argv[1].split('/')
   pathFragments.pop()

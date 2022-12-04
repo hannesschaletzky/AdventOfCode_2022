@@ -1,7 +1,7 @@
 // solutions: https://www.reddit.com/r/adventofcode/comments/zb865p/2022_day_3_solutions/
-import { getLinesOfFile } from 'utils/fs'
+import { getInputLines } from 'utils/fs'
 
-const lines = getLinesOfFile()
+const lines = getInputLines()
 
 let lowerAlphabet = [...Array(26).keys()].map((i) =>
   String.fromCharCode(i + 97)
