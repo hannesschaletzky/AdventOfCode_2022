@@ -12,14 +12,12 @@ function getInputFilePath(): string {
   return pathFragments.join('/')
 }
 
-export const getInputLines = (): string[] => {
-  const path = getInputFilePath()
-  console.log(`using file: ${path}`)
-  return fs.readFileSync(path, 'utf-8').split(/\r?\n/)
-}
-
 export const getInputFile = (): string => {
   const path = getInputFilePath()
   console.log(`using file: ${path}`)
   return fs.readFileSync(path, 'utf-8')
+}
+
+export const getInputLines = (): string[] => {
+  return getInputFile().split(/\r?\n/)
 }
