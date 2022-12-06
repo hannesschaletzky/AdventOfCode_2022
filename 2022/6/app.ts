@@ -4,15 +4,15 @@ import 'utils/extensions'
 const [line] = getInputLines()
 const chars = line.split('')
 
-const last: string[] = []
-const chunkLength = 14 // part 1: 4
+const msg: string[] = []
+const reqLength = 14 // part 1: 4
 chars.forEach((c, i) => {
-  if (last.length == chunkLength) {
-    if (last.duplicates().length == 0) {
+  if (msg.length == reqLength) {
+    if (msg.duplicates().length == 0) {
       console.log('answer: ', i)
       process.exit(0)
     }
-    last.shift()
+    msg.shift()
   }
-  last.push(c)
+  msg.push(c)
 })
