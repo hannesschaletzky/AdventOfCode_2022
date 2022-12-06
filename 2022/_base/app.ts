@@ -1,7 +1,8 @@
 // solutions
-import { getInputLines } from 'utils/fs'
+import { getInputLines, getInputFile } from 'utils/fs'
 
 const lines = getInputLines()
+const file = getInputFile()
 
 // part 1
 let sum1 = 0

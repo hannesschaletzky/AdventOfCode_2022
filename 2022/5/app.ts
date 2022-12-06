@@ -1,28 +1,25 @@
 // solutions
-import { getInputLines } from 'utils/fs'
+import { getInputLines, getInputFile } from 'utils/fs'
 
-const lines = getInputLines()
+// const lines = getInputLines()
+const file = getInputFile()
 
-let stacks: { [key: number]: string[] } = {}
+const [stacksInput, movesInput] = file.split('\n\n')
 
 // CREATE STACKS
-let maxCrates = 0
-lines.every((line) => {
-  if (line.includes('1')) {
-    return false
-  }
-  maxCrates++
-  return true
-})
-console.log(`maxCrates: ${maxCrates}`)
+let stacks: { [key: number]: string[] } = {}
+let stacksLines = stacksInput.split('\n')
+stacksLines.pop() // pop labels
+console.log(`maximum crates: ${stacksLines.length}`)
 
-const lineLength = lines[0].length
-for (let i = 0; i <= lineLength; i += 4) {
+// from left to right
+for (let i = 0; i <= stacksLines[0].length; i += 4) {
   let arr: string[] = []
-  for (let j = 0; j < maxCrates; j++) {
-    const element = lines[j][i + 1]
-    if (element.trim().length > 0) {
-      arr.push(element)
+  // from top to bottom
+  for (let j = 0; j < stacksLines.length; j++) {
+    const c = stacksLines[j][i + 1] // c always at 2nd position in block
+    if (c.trim().length > 0) {
+      arr.push(c)
     }
   }
   stacks[Object.entries(stacks).length + 1] = arr
@@ -30,21 +27,15 @@ for (let i = 0; i <= lineLength; i += 4) {
 console.log(stacks)
 
 // SORT
-lines.slice(maxCrates + 2).forEach((line) => {
+let moveLines = movesInput.split('\n')
+moveLines.forEach((line) => {
   const split = line.split(' ')
-  let amount = Number(split[1])
+  const amount = Number(split[1])
   const from = Number(split[3])
   const to = Number(split[5])
 
-  // PART 1
-  // while (amount > 0) {
-  //   const item = stacks[from].shift()
-  //   stacks[to].unshift(item!)
-  //   amount--
-  // }
-
-  // PART 2
-  const items = stacks[from].splice(0, amount)
+  let items = stacks[from].splice(0, amount)
+  items.reverse() // comment out for part 2
   stacks[to].unshift(...items)
 })
 console.log(stacks)

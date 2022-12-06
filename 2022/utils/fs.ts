@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-export const getInputLines = (): string[] => {
+function getInputFilePath(): string {
   // determine which input file to use based on process.argv[2]
   let pathFragments = process.argv[1].split('/')
   pathFragments.pop()
@@ -9,7 +9,17 @@ export const getInputLines = (): string[] => {
   } else {
     pathFragments.push('input.txt')
   }
-  const path = pathFragments.join('/')
+  return pathFragments.join('/')
+}
+
+export const getInputLines = (): string[] => {
+  const path = getInputFilePath()
   console.log(`using file: ${path}`)
   return fs.readFileSync(path, 'utf-8').split(/\r?\n/)
+}
+
+export const getInputFile = (): string => {
+  const path = getInputFilePath()
+  console.log(`using file: ${path}`)
+  return fs.readFileSync(path, 'utf-8')
 }
