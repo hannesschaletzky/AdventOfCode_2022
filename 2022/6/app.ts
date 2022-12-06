@@ -1,13 +1,18 @@
-// solutions
-import { getInputLines, getInputFile } from 'utils/fs'
+import { getInputLines } from 'utils/fs'
+import 'utils/extensions'
 
-const lines = getInputLines()
-const file = getInputFile()
+const [line] = getInputLines()
+const chars = line.split('')
 
-// part 1
-let sum1 = 0
-console.log(sum1)
-
-// part 2
-let sum2 = 0
-console.log(sum2)
+const last: string[] = []
+const chunkLength = 14 // part 1: 4
+chars.forEach((c, i) => {
+  if (last.length == chunkLength) {
+    if (last.duplicates().length == 0) {
+      console.log('answer: ', i)
+      process.exit(0)
+    }
+    last.shift()
+  }
+  last.push(c)
+})
