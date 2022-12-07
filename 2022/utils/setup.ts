@@ -5,12 +5,15 @@ import { JSDOM } from 'jsdom'
 import * as dotenv from 'dotenv'
 dotenv.config()
 
-const baseURI = 'https://adventofcode.com'
+// fs module will start from root (where package.json is located)
 const cookie = process.env.AOC_SESSION_COOKIE
+const baseURI = 'https://adventofcode.com'
 const _basePath = './_base'
+let newPath = ''
 const inputName = 'input.txt'
 const inputTestName = 'input_test.txt'
 const taskName = 'task.md'
+const tasksPath = '../.vscode/tasks.json'
 
 // read year and day from argv
 if (isNaN(+process.argv[2]) || isNaN(+process.argv[3])) {
@@ -20,14 +23,21 @@ if (isNaN(+process.argv[2]) || isNaN(+process.argv[3])) {
 }
 const year = Number(process.argv[2])
 const day = Number(process.argv[3])
+newPath = `./${day}`
 console.log('setting up: ', year, day)
 
-const newPath = `./${day}`
+console.log(`-----------\n set tasks.json default day to: ${day}\n-----------`)
+let file = JSON.parse(fs.readFileSync(tasksPath, 'utf8'))
+file.inputs.every((input: any, i: number) => {
+  if (input.id == 'day') {
+    file.inputs[i].default = day.toString()
+    fs.writeFileSync(tasksPath, JSON.stringify(file))
+    return false
+  }
+  return true
+})
 
-console.log(
-  `----------------------------\n create directory ${newPath}\n----------------------------`
-)
-
+console.log(`-----------\n create directory ${newPath}\n-----------`)
 if (fs.existsSync(newPath)) {
   console.log('removing old')
   fs.readdirSync(newPath).forEach((file) => {
@@ -49,9 +59,7 @@ const inputURL = `${taskURL}/input`
 scrapeAndSaveFiles()
 
 async function scrapeAndSaveFiles() {
-  console.log(
-    `----------------------------\nfetching & saving files\n----------------------------`
-  )
+  console.log(`-----------\nfetching & saving files\n-----------`)
   // input
   console.log('from: ', inputURL)
   const inputData = await getResponseData(inputURL)
@@ -71,12 +79,15 @@ async function scrapeAndSaveFiles() {
   // example / test input
   const inputTestPath = `${newPath}/${inputTestName}`
   const blocks = document.querySelectorAll('pre')
-  console.log('----------------------------\nchoose correct test input')
+  console.log('-----------\nchoose correct test input')
 
   for (let i = 0; i < blocks.length; i++) {
     const block = blocks[i]
-    const answer = await askBlock(block)
-    if (answer == 'yes') {
+    const answer = await askBlock(
+      '-> Type "y" to approve ✅, press enter ❌ to skip \n',
+      block
+    )
+    if (answer == 'y') {
       fs.writeFileSync(inputTestPath, block.textContent!)
       console.log('saved to: ', inputTestPath)
       break
@@ -87,16 +98,16 @@ async function scrapeAndSaveFiles() {
   process.exit(0)
 }
 
-function askBlock(block: HTMLPreElement) {
+function askBlock(question: string, block: HTMLPreElement) {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
   })
   return new Promise((resolve) => {
-    console.log('----------------------------')
+    console.log('-----------')
     console.log(block.previousElementSibling?.textContent, '\n')
     console.log(block.textContent)
-    rl.question('-> Type "yes" ✅ or "no" ❌\n', (ans: string) => {
+    rl.question(question, (ans: string) => {
       rl.close()
       resolve(ans)
     })
