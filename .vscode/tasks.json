@@ -1,1 +1,58 @@
-{"version":"2.0.0","tasks":[{"label":"pwd","type":"shell","command":"pwd","problemMatcher":[]},{"label":"setup","type":"shell","command":"cd 2022 && npm run setup ${input:year} ${input:day}","problemMatcher":[]}],"inputs":[{"id":"year","description":"Please choose a year.","type":"promptString","default":"2022"},{"type":"pickString","id":"day","description":"Please choose a day.","options":["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"],"default":"7"}]}
+{
+  "version": "2.0.0",
+  "tasks": [
+    { "label": "pwd", "type": "shell", "command": "pwd", "problemMatcher": [] },
+    {
+      "label": "setup",
+      "type": "shell",
+      "command": "cd 2022 && npm run setup ${input:year} ${input:day}",
+      "problemMatcher": []
+    },
+    {
+      "label": "run",
+      "type": "shell",
+      "command": "ts-node ${input:year}/${input:day}/app.ts",
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "year",
+      "description": "Please choose a year.",
+      "type": "promptString",
+      "default": "2022"
+    },
+    {
+      "type": "pickString",
+      "id": "day",
+      "description": "Please choose a day.",
+      "options": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24"
+      ],
+      "default": "7"
+    }
+  ]
+}
