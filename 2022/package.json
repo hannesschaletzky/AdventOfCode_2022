@@ -4,6 +4,9 @@
   "description": "https://adventofcode.com/2022",
   "author": "Hannes Schaletzky",
   "license": "UNLICENSED",
+  "scripts": {
+    "setup": "ts-node ./utils/setup.ts"
+  },
   "dependencies": {
     "@types/jsdom": "^20.0.1",
     "axios": "^1.2.1",
