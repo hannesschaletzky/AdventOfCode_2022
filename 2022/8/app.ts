@@ -28,6 +28,7 @@ console.log(total)
   33549
   35390
 */
+let totalScores: number[] = []
 
 // top to bottom
 for (let i = 0; i < lines.length; i++) {
@@ -36,12 +37,93 @@ for (let i = 0; i < lines.length; i++) {
     continue
   }
   // left to right
-  const line = lines[i].split('')
+  const line = lines[i]
   for (let j = 0; j < line.length; j++) {
     // ignore first & last item
     if (j == 0 || j == line.length - 1) {
       continue
     }
     const tree = line[j]
+    let visible = false
+    let totalScore = 1
+    let score = 0
+
+    // look left
+    for (let iLeft = j - 1; iLeft >= 0; iLeft--) {
+      const compTree = line[iLeft]
+      score++
+      if (compTree >= tree) {
+        break
+      }
+      if (iLeft == 0) {
+        visible = true
+      }
+    }
+    // if (visible) {
+    //   total++
+    //   continue
+    // }
+    totalScore *= score
+    score = 0
+
+    // look top
+    for (let iTop = i - 1; iTop >= 0; iTop--) {
+      const compTree = lines[iTop][j]
+      score++
+      if (compTree >= tree) {
+        break
+      }
+      if (iTop == 0) {
+        visible = true
+      }
+    }
+    // if (visible) {
+    //   total++
+    //   continue
+    // }
+    totalScore *= score
+    score = 0
+
+    // look right
+    for (let iRight = j + 1; iRight < line.length; iRight++) {
+      const compTree = line[iRight]
+      score++
+      if (compTree >= tree) {
+        break
+      }
+      if (iRight == line.length - 1) {
+        visible = true
+      }
+    }
+    // if (visible) {
+    //   total++
+    //   continue
+    // }
+    totalScore *= score
+    score = 0
+
+    // look bottom
+    for (let iBottom = i + 1; iBottom < lines.length; iBottom++) {
+      const compTree = lines[iBottom][j]
+      score++
+      if (compTree >= tree) {
+        break
+      }
+      if (iBottom == lines.length - 1) {
+        visible = true
+      }
+    }
+    // if (visible) {
+    //   total++
+    //   continue
+    // }
+    totalScore *= score
+    totalScores.push(totalScore)
   }
 }
+
+console.log(totalScores)
+totalScores = totalScores.sort((a, b) => b - a)
+console.log(totalScores)
+console.log(totalScores[0])
+console.log(total)
