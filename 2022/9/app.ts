@@ -1,13 +1,39 @@
 import 'utils/extensions'
-import { getInputLines, getInputFile } from 'utils/fs'
+import { lines } from 'utils/fs'
 
-const lines = getInputLines()
-const file = getInputFile()
+interface P {
+  H: string
+  T: string
+  V: string // visisted
+}
+
+const size = 1000
+const grid = new Array(size)
+for (let i = 0; i < size; i++) {
+  grid[i] = new Array(size)
+  for (let j = 0; j < size; j++) {
+    grid[i][j] = {
+      H: '',
+      T: '',
+      V: ''
+    }
+  }
+}
+
+let x = 500
+let y = 500
+grid[x][y] = {
+  H: 'H',
+  T: 'T',
+  V: '#'
+}
+console.log(grid[x][y])
+
+lines.forEach((line) => {
+  const [dir, amount] = line.split(' ')
+  console.log(dir, amount)
+})
 
 // part 1
-let ans1
-console.log(ans1)
-
-// part 2
-let ans2 = 0
-console.log(ans2)
+let ans = 0
+console.log(ans)

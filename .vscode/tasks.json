@@ -10,11 +10,18 @@
     {
       "label": "run",
       "type": "shell",
-      "command": "ts-node --project 2022/tsconfig.json ${input:year}/${input:day}/app.ts",
-      "problemMatcher": []
+      "command": "ts-node --project 2022/tsconfig.json ${input:year}/${input:day}/app.ts ${input:test}",
+      "problemMatcher": ["$tsc"]
     }
   ],
   "inputs": [
+    {
+      "id": "test",
+      "description": "Select input file",
+      "type": "pickString",
+      "options": ["test", "prod"],
+      "default": "test"
+    },
     {
       "id": "year",
       "description": "Please choose a year.",

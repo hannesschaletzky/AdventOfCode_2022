@@ -21,3 +21,6 @@ export const getInputFile = (): string => {
 export const getInputLines = (): string[] => {
   return getInputFile().split(/\r?\n/)
 }
+
+export const lines = getInputLines()
+export const file = getInputFile()
