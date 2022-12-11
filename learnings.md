@@ -31,3 +31,9 @@ Added lots of snippets ([docs](https://code.visualstudio.com/docs/editor/userdef
 ### 2022, 7:
 
 I don't have a fucking clue on how to properly work with tree structures.
+
+### 2022, 9:
+
+Use set for unique value storage
+Follow the rules described in the task.
+Part 2 was not possible, because I implemented Part 1 not in a rope behaving way.
