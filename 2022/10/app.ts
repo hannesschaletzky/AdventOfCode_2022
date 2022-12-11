@@ -21,17 +21,16 @@ lines.forEach((line, i) => {
     checkSignalStrength()
     cycle++
   } else if (operation == 'addx') {
-    checkSignalStrength()
-    execCalculations()
     const task: Task = {
-      finishedAtCycle: cycle + 1,
+      finishedAtCycle: cycle + 2,
       calculation: number
     }
     queue.push(task)
     cycle++
     checkSignalStrength()
-    execCalculations()
     cycle++
+    checkSignalStrength()
+    execCalculations()
   }
 
   function execCalculations() {
