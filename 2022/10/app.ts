@@ -8,17 +8,26 @@ interface Task {
 let queue: Task[] = []
 let x = 1
 let sum = 0
+let cycles = 0
 for (let i = 0; i < lines.length; i++) {
   const line = lines[i]
   const split = line.split(' ')
   const operation = split[0]
   const number = Number(split[1])
+  cycles++
 
-  console.log(i)
-  console.log(operation, number, 'x:', x)
+  console.log(cycles, i, operation, number, 'x:', x)
+
+  // see signal strength
+  if (cycles == 20 || cycles % 40 == 20) {
+    const result = x * cycles
+    console.log('result:', result, '\n\n\n\n\n')
+    sum += result
+  }
 
   // add task to queue
   if (operation == 'addx') {
+    cycles++
     const task: Task = {
       cycles: 2,
       calculation: number
@@ -26,7 +35,7 @@ for (let i = 0; i < lines.length; i++) {
     queue.push(task)
   }
 
-  // reduce all queued tasks by one cycle
+  // reduce queued tasks by one cycle
   queue = queue.map((task) => {
     task.cycles--
     return task
@@ -40,23 +49,11 @@ for (let i = 0; i < lines.length; i++) {
     }
   }
 
-  // process finished tasks
+  // include calculation of finished tasks
   finishedTasks.forEach((task) => {
     console.log('exec:', task.calculation)
     x += task.calculation
   })
-
-  // see strength
-  if (i == 10) {
-    const result = x * 20
-    console.log('result:', result)
-    sum += result
-  } else if (i == 31) {
-    const result = x * 60
-    console.log('result:', result)
-    sum += result
-    break
-  }
 }
 
 // 1 + 15 - 11 + 6 - 3 + 5 - 1 - 8 + 13 + 4 = 21
