@@ -10,31 +10,15 @@ let start: Point = {
   x: 500,
   y: 500
 }
+let head = Object.assign({}, start)
+let tail = Object.assign({}, start)
 
-let head: Point = {
-  x: start.x,
-  y: start.y
-}
-let tail: Point = {
-  x: start.x,
-  y: start.y
-}
-const visited: Point[] = []
-addTailToVisited()
-
-function addTailToVisited() {
-  let tailCopy = Object.assign({}, tail)
-  for (let i = 0; i < visited.length; i++) {
-    if (visited[i].x == tailCopy.x && visited[i].y == tailCopy.y) {
-      return
-    }
-  }
-  visited.push(tailCopy)
-}
+const visitedSet = new Set<string>()
+addTailToVisited() // add inital overlap of head and tail
 
 lines.forEach((line) => {
-  const [direction, amountS] = line.split(' ')
-  let amount = Number(amountS)
+  const [direction, _] = line.split(' ')
+  let amount = Number(_)
 
   for (amount; amount > 0; amount--) {
     MoveHeadOneStepInto(direction)
@@ -44,6 +28,10 @@ lines.forEach((line) => {
     }
   }
 })
+
+function addTailToVisited() {
+  visitedSet.add(`${tail.x}, ${tail.y}`)
+}
 
 function appendTail(direction: string) {
   // tail is appended in opposite direction of head movement
@@ -72,7 +60,6 @@ function headOutOfRange() {
 }
 
 function MoveHeadOneStepInto(direction: string) {
-  // emptyHead()
   if (direction == 'L') {
     head.x--
   } else if (direction == 'U') {
@@ -84,4 +71,4 @@ function MoveHeadOneStepInto(direction: string) {
   }
 }
 
-console.log(visited.length)
+console.log(visitedSet.size)
