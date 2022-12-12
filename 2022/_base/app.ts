@@ -5,9 +5,5 @@ const lines = getInputLines()
 const file = getInputFile()
 
 // part 1
-let ans1
-console.log(ans1)
-
-// part 2
-let ans2 = 0
-console.log(ans2)
+let sum = 0
+console.log('sum:', sum)
