@@ -75,16 +75,24 @@ blocks.forEach((block) => {
   monkeys[id] = monkey
 })
 
+// calc lowest common multiple for part 2
+let divisors = Object.values(monkeys)
+  .map((monkey) => {
+    return monkey.testNum
+  })
+  .reduce((total, current) => total * current)
+console.log(divisors)
+
 // rounds
-for (let roundI = 0; roundI < 20; roundI++) {
+for (let roundI = 0; roundI < 10000; roundI++) {
   // monkeys
   Object.entries(monkeys).forEach(([key, monkey]) => {
     // items
+    monkeys[+key].totalInspects += monkey.items.length
     let item = monkey.items.shift()
     while (item != undefined) {
-      monkeys[+key].totalInspects++
       let lvl = monkey.operation(item)
-      lvl = Math.trunc(lvl / 3)
+      lvl = lvl % divisors // worry lvl
       if (lvl % monkey.testNum == 0) {
         monkeys[monkey.trueId].items.push(lvl)
       } else {
@@ -100,6 +108,4 @@ let [first, second] = Object.values(monkeys)
     return monkey.totalInspects
   })
   .sort((a, b) => b - a)
-console.log(first, '*', second)
-let sum = first * second
-console.log('sum:', sum)
+console.log(first, '*', second, '=', first * second)
