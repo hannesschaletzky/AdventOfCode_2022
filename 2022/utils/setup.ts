@@ -23,7 +23,7 @@ if (isNaN(+process.argv[2]) || isNaN(+process.argv[3])) {
 }
 const year = Number(process.argv[2])
 const day = Number(process.argv[3])
-newPath = `./${day}`
+newPath = `./${('0' + day).slice(-2)}`
 console.log('setting up: ', year, day)
 
 console.log(`-----------\n set tasks.json default day to: ${day}\n-----------`)
