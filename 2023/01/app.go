@@ -7,10 +7,11 @@ import (
 	"os"
 	"regexp"
 	"strconv"
+	"strings"
 )
 
-func getInputFile() (*os.File, *bufio.Scanner, error) {
-	file, err := os.Open("./input.txt")
+func getInputFile(number int64) (*os.File, *bufio.Scanner, error) {
+	file, err := os.Open(fmt.Sprintf("./input%d.txt", number))
 	if err != nil {
 		return nil, nil, err
 	}
@@ -19,8 +20,33 @@ func getInputFile() (*os.File, *bufio.Scanner, error) {
 	return file, scanner, nil
 }
 
+func returnNumberForString(number string) string {
+	switch number {
+	case "one":
+		return "1"
+	case "two":
+		return "2"
+	case "three":
+		return "3"
+	case "four":
+		return "4"
+	case "five":
+		return "5"
+	case "six":
+		return "6"
+	case "seven":
+		return "7"
+	case "eight":
+		return "8"
+	case "nine":
+		return "9"
+	default:
+		return ""
+	}
+}
+
 func main() {
-	file, scanner, err := getInputFile()
+	file, scanner, err := getInputFile(2)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -30,25 +56,39 @@ func main() {
 	sum := 0
 	for scanner.Scan() {
 		line := scanner.Text()
-		re := regexp.MustCompile(`\d[1]*`)
-		numbers := re.FindAllString(line, -1)
-		fmt.Println(numbers)
-		if len(numbers) == 1 {
-			num, err := strconv.Atoi(numbers[0])
-			if err != nil {
-				log.Fatal(err)
+		fmt.Println(line)
+
+		i := 1
+		for i <= len(line) {
+			fmt.Println(line[0:i])
+			re := regexp.MustCompile(`(?:one|two|three|four|five|six|seven|eight|nine)`)
+			matches := re.FindAllString(line[0:i], -1)
+			fmt.Println(matches) // Output: [nine]
+			if len(matches) == 1 {
+				line = strings.ReplaceAll(line, matches[0], returnNumberForString(matches[0]))
+				i = 1
+			} else {
+				i++
 			}
-			fmt.Println("=1", num)
-			sum += num
-		} else if len(numbers) > 1 {
-			numberStr := fmt.Sprintf("%s%s", numbers[0], numbers[len(numbers)-1])
-			num, err := strconv.Atoi(numberStr)
-			if err != nil {
-				log.Fatal(err)
-			}
-			fmt.Println(">1", num)
-			sum += num
 		}
+		re := regexp.MustCompile(`\d`)
+		numbers := re.FindAllString(line, -1)
+		fmt.Println(line)
+		fmt.Println(numbers)
+		numberStr := ""
+		if len(numbers) == 0 {
+			numberStr = "0"
+		} else if len(numbers) == 1 {
+			numberStr = fmt.Sprintf("%s%s", numbers[0], numbers[0])
+		} else if len(numbers) > 1 {
+			numberStr = fmt.Sprintf("%s%s", numbers[0], numbers[len(numbers)-1])
+		}
+		num, err := strconv.Atoi(numberStr)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println("", num)
+		sum += num
 	}
 	fmt.Println(sum)
 
