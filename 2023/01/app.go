@@ -46,13 +46,12 @@ func returnNumberForString(number string) string {
 }
 
 func main() {
-	file, scanner, err := getInputFile(2)
+	file, scanner, err := getInputFile(1)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer file.Close()
 
-	// Now you can use the scanner to read from the file
 	sum := 0
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -63,14 +62,28 @@ func main() {
 			fmt.Println(line[0:i])
 			re := regexp.MustCompile(`(?:one|two|three|four|five|six|seven|eight|nine)`)
 			matches := re.FindAllString(line[0:i], -1)
-			fmt.Println(matches) // Output: [nine]
+			fmt.Println(matches)
 			if len(matches) == 1 {
 				line = strings.ReplaceAll(line, matches[0], returnNumberForString(matches[0]))
-				i = 1
-			} else {
-				i++
+				break
 			}
+			i++
 		}
+
+		fmt.Println(line)
+		i = len(line)
+		for i >= 0 {
+			fmt.Println(line[i:])
+			re := regexp.MustCompile(`(?:one|two|three|four|five|six|seven|eight|nine)`)
+			matches := re.FindAllString(line[i:], -1)
+			fmt.Println(matches)
+			if len(matches) == 1 {
+				line = line[0:i] + strings.ReplaceAll(line[i:], matches[0], returnNumberForString(matches[0]))
+				break
+			}
+			i--
+		}
+
 		re := regexp.MustCompile(`\d`)
 		numbers := re.FindAllString(line, -1)
 		fmt.Println(line)
